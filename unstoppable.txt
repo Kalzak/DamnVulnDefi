@@ -1,0 +1,18 @@
+UnstoppableLender.sol
+	constructor
+		Sets the address of the token that flashloans will be sent in
+	depositTokens
+		transferFrom msg.sender the tokens and add amount sent to `poolBalance`
+		Must be > 0 tokens deposited
+	flashLoan
+		Must borrow > 0 tokens
+		Can't borrow more than total of `poolBalance`
+		`assert` that the internal tracking for pool balance matches balance
+			We can make the internal tracking not match the actual balance by sending tokens
+
+I didn't even get to finish looking at the other file 
+We can break the assert statement by sending the ERC-20 tokens to the contract
+This makes the internal tracker `poolBalance` mismatch the actual balance which is checked by `balanceOf`
+When they are checked if equal with the `assert` statement it will fail
+Since this check is within the `flashLoan` function it is impossible to make any flashloans unless the owner can burn an amount of
+  tokens to 're-calibrate' their internally tracked balance with their actual balance
