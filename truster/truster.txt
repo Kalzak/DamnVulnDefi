@@ -1,0 +1,12 @@
+Flash loans in the form of DVT tokens are being offered for free
+Pool has 1MM DVT tokens in balance
+You start with nothing
+Try to get all tokens from the pool in a single TX
+
+The token makes an external call to any contract that we can choose in the `flashLoan` function
+We can't use this for reentrancy because there is the OpenZeppelin reentrancy prevention library in use
+We CAN make a call to approve for token transfers if we pass the ERC20 token as the `target` address
+In order to have a successful transfer, we can't touch the balance of the contract
+Fortunately there aren't any zero checks for amount borrowed
+We can simply request a flashloan of value zero
+The contract for this attack is able to steal the funds in one TX
