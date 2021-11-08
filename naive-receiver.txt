@@ -1,0 +1,27 @@
+Lending pool offering expensive flash loans of Ether, which has 1000ETH in balance
+A user has deployed contract with 10ETH in balance capable of interacting with lending pool and receiving flash loans of ETH
+Drain all ETH funds from users contract
+Do it in single TX for bonus points
+
+NaiveReceiverLenderPool.sol
+	General notes
+		Costs 1ETH per flash loan
+		Allows deposits of ETH
+	Functions
+		fixedFee
+			Just returns the fee
+			Useless for attack
+		flashLoan
+			Arguments are the borrower (type address) and borrowAmount (type uint256)
+			They implemented a patch to the attack on `unstoppable` so we can't go that route
+			The problem is that the `borrower` isn't decided by `msg.sender` so we can put whoever we want as the `borrower`
+			  and they will incur the fee
+
+FlashLoanReceiver.sol
+	General notes
+		This contract which was written by a single user for their own use has no access control or ownership
+		But there is nothing that we can call that will have any effect on the contract state or balance due to the require
+		  statement for `msg.sender` on the only publicly accessible function
+
+To get bonus points, you would simple write a smart contract that does this 10 times in a loop and call that instead of manually 
+  calling `flashLoan` 10 times from an EOA
