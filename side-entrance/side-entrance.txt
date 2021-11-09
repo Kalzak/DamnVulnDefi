@@ -1,0 +1,11 @@
+Lending pool allows anyone to deposit ETH, and withdraw anytime
+Has 1000ETH in balance already
+Offering free flash loans using the deposited ETH
+Take all ETH from lending pool
+
+Before a flashloan is given, the current balance of the lending pool is checked
+Then the flashloan is executed on `msg.sender`s `execute()` function
+Then a check is done to see if the balance is the contract hasn't reduced in any way (any loss of funds)
+Inside the our flashloan function we can make a deposit with the flashloan funds
+This way we 'own' the funds according to the contract but at the same time the funds are going back to the lending pool
+This means that the conditions in the require statement will still be met
