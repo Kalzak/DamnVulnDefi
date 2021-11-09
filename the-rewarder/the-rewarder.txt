@@ -1,0 +1,17 @@
+A pool offering rewards every 5 days for people who have deposited DTV tokens
+Alice, Bob, Charlie, David have deposited DVT tokens and got rewards
+You have no DVT token
+In upcoming reward round, you have to claim most rewards for yourself
+New pool on mainnet doing DVT flashloans
+
+Files:
+	RewardToken.sol 		(The ERC20 token that is given when as a reward for depositing DVT tokens)
+	AccountingTokens.sol		(ERC20-like token to track deposits & withdrawals, used by TheRewarderPool)
+	FlashLoanerPool.sol		(Simple pool to get flash loans of DVT)
+	TheRewarderPool.sol		(The pool that gives rewards to depositors)
+
+The security flaw is with the function `distributeRewards` in `TheRewarderPool.sol`
+The amount held by the users who have deposited is done by the snapshot which isn't an accurate representation of holdings currently
+We can use a flashloan to say that we have a lot of tokens deposited in the contract before a snapshot runs
+Then we can claim the rewards with our large amount of funds from the flashloan 
+Once we have claimed rewards we withdraw and return funds to the flashLoanPool
