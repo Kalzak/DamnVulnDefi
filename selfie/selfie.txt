@@ -1,0 +1,23 @@
+New lending pool launched which offers DVT flash loans
+Has governance mechanism to control it
+You start with no DVT tokens
+Get all 1.5 million from the lending pool
+
+Files
+	SimpleGovernance.sol 	(Governance contract for queuing actions)
+		Functions
+			queueAction	(allows you to propose an action)
+			executeAction	(executes a proposed action)
+			getActionDelay	(returns the delay between an action being proposed and able to be executed)
+			_canBeExecuted	(private function which returns if a given action is able to be executed)
+			_hasEnoughVotes (if the account proposing owns over half the supply then return true)
+	SelfiePool.sol 		()
+		Functions
+			flashLoan	(given a flashloan. no reentrancy)
+			drainAllFunds	(if called from governance contract will drain all funds to a designated account)
+
+Need to be able to call the `drainAllFunds` function
+To do that, we need to be able to propose an action throught the governance contract
+In order to propose an action we need to have over half the supply of tokens
+We can get these tokens by calling a flashloan to the contracts address
+Now that we have met the requirements for governance we are able to propose to drain all funds
